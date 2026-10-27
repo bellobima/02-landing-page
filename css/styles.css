@@ -165,6 +165,7 @@ h2 { margin-bottom: 0; font-size: clamp(2.25rem, 8vw, 3.3rem); line-height: 1.15
   border-bottom: 1px solid rgb(255 255 255 / 9%);
   background: var(--color-brand);
 }
+.header--scrolled { box-shadow: 0 8px 24px rgb(0 0 0 / 18%); }
 .header__inner { display: flex; min-height: 4.25rem; align-items: center; justify-content: space-between; }
 .brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 0.7rem; }
 .brand__mark {
@@ -293,6 +294,7 @@ h2 { margin-bottom: 0; font-size: clamp(2.25rem, 8vw, 3.3rem); line-height: 1.15
 .pricing-toggle__option { min-height: 2.15rem; padding: 0 0.7rem; border: 0; color: #657083; background: transparent; cursor: pointer; font-size: 0.63rem; font-weight: 600; }
 .pricing-toggle__option[aria-pressed="true"], .pricing-toggle__option--active { color: var(--color-brand); background: var(--color-white); box-shadow: 0 1px 5px rgb(10 25 47 / 10%); }
 .pricing-toggle__badge { margin-left: 0.25rem; padding: 0.12rem 0.4rem; color: #80691D; background: #F3E9C9; font-size: 0.47rem; }
+.pricing-toggle__badge[hidden] { display: none; }
 .pricing__grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2.2rem; }
 .pricing__card { position: relative; padding: 1.5rem; box-shadow: none; }
 .pricing__card--featured { border: 2px solid var(--color-accent); box-shadow: var(--shadow-card-raised); }
@@ -341,7 +343,8 @@ h2 { margin-bottom: 0; font-size: clamp(2.25rem, 8vw, 3.3rem); line-height: 1.15
 .faq__icon::before, .faq__icon::after { position: absolute; top: 0.65rem; left: 0.38rem; width: 0.62rem; height: 1px; background: #826D2A; content: ''; transition: transform 180ms ease; }
 .faq__icon::after { transform: rotate(90deg); }
 .faq__question[aria-expanded="true"] .faq__icon::after { transform: rotate(0deg); }
-.faq__answer { padding: 0 2.5rem 1.25rem 0; }
+.faq__answer { height: 0; overflow: hidden; transition: height 260ms ease; }
+.faq__answer-content { padding: 0 2.5rem 1.25rem 0; }
 .faq__answer p { max-width: 36rem; margin: 0; color: #6F7A89; font-size: 0.7rem; line-height: 1.85; }
 
 /* Sign-up form and footer */
