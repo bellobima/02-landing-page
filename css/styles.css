@@ -460,6 +460,42 @@ h2 { margin-bottom: 0; font-size: clamp(2.25rem, 8vw, 3.3rem); line-height: 1.15
   .footer__main { gap: 3.5rem; padding-block: 3.6rem 2.9rem; }
 }
 
+/* Readability: keep supporting text comfortably legible and increase contrast. */
+body { font-size: 1rem; }
+.btn { font-size: 0.875rem; }
+.badge { font-size: 0.75rem; }
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.12em; }
+.nav > a:not(.btn) { font-size: 0.875rem; }
+.brand__name small { font-size: 0.625rem; }
+.hero__description, .section-heading__intro, .signup__copy > p:not(.eyebrow) { font-size: 1rem; }
+.hero__proof p, .hero__proof strong { color: #C5CED9; font-size: 0.8125rem; }
+.chart-card__label, .chart-card__meta span + span, .chart-card__axis, .chart-card__footer { color: #B5C0CF; font-size: 0.75rem; }
+.chart-card__change { font-size: 0.8125rem; }
+.hero__note strong { font-size: 0.75rem; }
+.hero__note small { color: #C5CED9; font-size: 0.6875rem; }
+.principles__inner > span { font-size: 0.8125rem; }
+.section-heading__intro, .feature-card p { color: #4F5B6B; }
+.feature-card p, .pricing__description, .pricing__list li, .faq__answer p { font-size: 0.875rem; }
+.pricing__kicker { font-size: 0.75rem; }
+.pricing__billing-note, .pricing__period, .pricing__disclaimer { color: #586474; font-size: 0.75rem; }
+.pricing-toggle__option { font-size: 0.8125rem; }
+.pricing-toggle__badge { font-size: 0.6875rem; }
+.pricing__badge { font-size: 0.6875rem; }
+.testimonial-card blockquote { font-size: 1rem; }
+.testimonial-card__person cite { font-size: 0.8125rem; }
+.testimonial-card__person div span, .testimonials__disclaimer { color: #B8C3D0; font-size: 0.75rem; }
+.faq__intro > p:last-child, .faq__question { font-size: 1rem; }
+.link--inline { font-size: 0.875rem; }
+.form__heading p, .form__field label { color: #465365; font-size: 0.8125rem; }
+.form__field input, .form__field select { font-size: 0.875rem; }
+.form__error { font-size: 0.8125rem; }
+.form__terms { font-size: 0.75rem; }
+.form__status { font-size: 0.8125rem; }
+.form__note { font-size: 0.75rem; }
+.footer__brand > p, .footer__column a, .footer__email { color: #B8C3D0; font-size: 0.8125rem; }
+.footer__column h3 { font-size: 1rem; }
+.footer__bottom p, .footer__bottom a { color: #AEB9C7; font-size: 0.75rem; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
 }
