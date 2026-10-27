@@ -369,11 +369,18 @@ h2 { margin-bottom: 0; font-size: clamp(2.25rem, 8vw, 3.3rem); line-height: 1.15
 .form__field input::placeholder { color: #A1A7AE; }
 .form__field select:invalid { color: #8A929C; }
 .form__field select option { color: var(--color-ink); }
+.form__field [aria-invalid="true"], .form__terms-field [aria-invalid="true"] { border-color: #B42318; }
+.form__error { display: block; min-height: 0; color: #B42318; font-size: 0.58rem; line-height: 1.5; }
+.form__error:empty { display: none; }
+.form__terms-field { margin: 1rem 0; }
+.form__terms-field .form__terms { margin: 0; }
+.form__terms-field .form__error { margin: 0.35rem 0 0 1.45rem; }
 .form__terms { display: flex; align-items: flex-start; gap: 0.55rem; margin: 1rem 0; color: #727C89; font-size: 0.56rem; line-height: 1.6; cursor: pointer; }
 .form__terms input { width: 0.9rem; height: 0.9rem; flex: 0 0 auto; margin: 0.12rem 0 0; accent-color: var(--color-brand); }
 .form__terms a { color: #8B7221; text-decoration: underline; text-underline-offset: 2px; }
 .form__submit { width: 100%; min-height: 2.95rem; cursor: pointer; }
 .form__status { margin: 0.7rem 0 0; color: var(--color-success); font-size: 0.63rem; line-height: 1.5; }
+.form__status--error { color: #B42318; }
 .form__status:empty { display: none; }
 .form__note { margin: 0.7rem 0 0; color: #89919B; text-align: center; font-size: 0.5rem; }
 .footer { color: #C5CDD7; background: var(--color-brand-deep); }

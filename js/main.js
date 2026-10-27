@@ -188,7 +188,7 @@ const initPlanSelection = () => {
 };
 
 /**
- * Validates the demo enquiry form and explains that it does not submit data.
+ * Validates and stores a signup in this browser's local storage.
  */
 const initSignupForm = () => {
   const signupForm = document.querySelector('#signup-form');
@@ -198,15 +198,138 @@ const initSignupForm = () => {
     return;
   }
 
-  signupForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+  const fields = {
+    name: signupForm.elements.namedItem('name'),
+    email: signupForm.elements.namedItem('email'),
+    plan: signupForm.elements.namedItem('plan'),
+    terms: signupForm.elements.namedItem('terms')
+  };
+  const validation = {
+    name: { field: fields.name, error: document.querySelector('#name-error') },
+    email: { field: fields.email, error: document.querySelector('#email-error') },
+    plan: { field: fields.plan, error: document.querySelector('#plan-error') },
+    terms: { field: fields.terms, error: document.querySelector('#terms-error') }
+  };
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-    if (!signupForm.reportValidity()) {
+  const setFieldError = (key, message) => {
+    const item = validation[key];
+
+    if (!(item.field instanceof HTMLElement) || !(item.error instanceof HTMLElement)) {
       return;
     }
 
-    formStatus.textContent = 'Thanks for your interest. This demo form is not connected to enrollment, so your details were not sent or stored.';
+    item.field.setAttribute('aria-invalid', String(Boolean(message)));
+    item.error.textContent = message;
+  };
+
+  const validateField = (key) => {
+    switch (key) {
+      case 'name':
+        setFieldError('name', fields.name instanceof HTMLInputElement && fields.name.value.trim().length < 2
+          ? 'Enter a name with at least 2 characters.'
+          : '');
+        break;
+      case 'email':
+        setFieldError('email', fields.email instanceof HTMLInputElement && !emailPattern.test(fields.email.value.trim())
+          ? 'Enter a valid email address.'
+          : '');
+        break;
+      case 'plan':
+        setFieldError('plan', fields.plan instanceof HTMLSelectElement && !fields.plan.value
+          ? 'Select a program.'
+          : '');
+        break;
+      case 'terms':
+        setFieldError('terms', fields.terms instanceof HTMLInputElement && !fields.terms.checked
+          ? 'Agree to the terms to continue.'
+          : '');
+        break;
+      default:
+        break;
+    }
+
+    const item = validation[key];
+    return item?.field instanceof HTMLElement && item.field.getAttribute('aria-invalid') !== 'true';
+  };
+
+  Object.keys(validation).forEach((key) => {
+    const item = validation[key];
+
+    if (!(item.field instanceof HTMLElement)) {
+      return;
+    }
+
+    const eventName = item.field instanceof HTMLSelectElement || item.field instanceof HTMLInputElement && item.field.type === 'checkbox'
+      ? 'change'
+      : 'input';
+
+    item.field.addEventListener(eventName, () => {
+      validateField(key);
+      formStatus.textContent = '';
+      formStatus.classList.remove('form__status--error');
+    });
+  });
+
+  signupForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    formStatus.textContent = '';
+    formStatus.classList.remove('form__status--error');
+
+    const isValid = Object.keys(validation).map(validateField).every(Boolean);
+
+    if (!isValid) {
+      const firstInvalidField = Object.values(validation).find(({ field }) => field instanceof HTMLElement && field.getAttribute('aria-invalid') === 'true')?.field;
+      firstInvalidField?.focus();
+      return;
+    }
+
+    if (!(fields.name instanceof HTMLInputElement) || !(fields.email instanceof HTMLInputElement) || !(fields.plan instanceof HTMLSelectElement)) {
+      formStatus.textContent = 'The signup form could not be processed because a required field is unavailable.';
+      formStatus.classList.add('form__status--error');
+      return;
+    }
+
+    const signup = {
+      name: fields.name.value.trim(),
+      email: fields.email.value.trim(),
+      plan: fields.plan.value,
+      createdAt: new Date().toISOString()
+    };
+
+    try {
+      const storedSignups = localStorage.getItem('signups');
+      const signups = storedSignups ? JSON.parse(storedSignups) : [];
+
+      if (!Array.isArray(signups)) {
+        formStatus.textContent = 'Your signup could not be saved because the stored signup data is invalid. Clear the "signups" entry in localStorage and try again.';
+        formStatus.classList.add('form__status--error');
+        return;
+      }
+
+      const alreadySignedUp = signups.some((entry) => (
+        entry && typeof entry.email === 'string' && entry.email.trim().toLowerCase() === signup.email.toLowerCase()
+      ));
+
+      if (alreadySignedUp) {
+        formStatus.textContent = "You've already signed up";
+        formStatus.classList.add('form__status--error');
+        return;
+      }
+
+      localStorage.setItem('signups', JSON.stringify([...signups, signup]));
+    } catch (error) {
+      formStatus.textContent = error instanceof SyntaxError
+        ? 'Your signup could not be saved because the stored signup data is invalid. Clear the "signups" entry in localStorage and try again.'
+        : 'Your signup could not be saved in this browser. Check that local storage is available and try again.';
+      formStatus.classList.add('form__status--error');
+      return;
+    }
+
     signupForm.reset();
+    Object.keys(validation).forEach((key) => setFieldError(key, ''));
+    Object.values(validation).forEach(({ field }) => field instanceof HTMLElement && field.setAttribute('aria-invalid', 'false'));
+    formStatus.textContent = 'Thanks for signing up. Your enquiry has been saved in this browser.';
   });
 };
 

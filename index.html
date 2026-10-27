@@ -209,15 +209,18 @@
             <p>Tell us what you’re looking for. We’ll help you explore the program that matches your goals and experience.</p>
             <div class="signup__contact"><span class="signup__contact-icon" aria-hidden="true">↗</span><span><small>Thoughtful learning. No pressure.</small><strong>Let’s find your starting point.</strong></span></div>
           </div>
-          <form class="card form signup__form" id="signup-form">
+          <form class="card form signup__form" id="signup-form" novalidate>
             <div class="form__heading"><span class="form__step">01</span><div><h3>Enquire about a program</h3><p>Share a few details and we’ll be in touch.</p></div></div>
-            <div class="form__field"><label for="full-name">Full name</label><input id="full-name" name="name" type="text" autocomplete="name" placeholder="Your name" required></div>
-            <div class="form__field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
-            <div class="form__field"><label for="plan">Program of interest</label><select id="plan" name="plan" required><option value="" selected disabled>Select a program</option><option value="Basic">Basic — Forex foundations</option><option value="Pro Mentorship">Pro — Three-month mentorship</option><option value="Business">Business — Team learning</option></select></div>
-            <label class="form__terms"><input type="checkbox" name="terms" required><span>I agree to be contacted about academy programs and have read the <a href="#footer">privacy information</a>.</span></label>
+            <div class="form__field"><label for="full-name">Full name</label><input id="full-name" name="name" type="text" autocomplete="name" placeholder="Your name" aria-describedby="name-error" required><span class="form__error" id="name-error"></span></div>
+            <div class="form__field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="email-error" required><span class="form__error" id="email-error"></span></div>
+            <div class="form__field"><label for="plan">Program of interest</label><select id="plan" name="plan" aria-describedby="plan-error" required><option value="" selected disabled>Select a program</option><option value="Basic">Basic — Forex foundations</option><option value="Pro Mentorship">Pro — Three-month mentorship</option><option value="Business">Business — Team learning</option></select><span class="form__error" id="plan-error"></span></div>
+            <div class="form__terms-field">
+              <label class="form__terms"><input type="checkbox" name="terms" aria-describedby="terms-error" required><span>I agree to be contacted about academy programs and have read the <a href="#footer">privacy information</a>.</span></label>
+              <span class="form__error" id="terms-error"></span>
+            </div>
             <button class="btn btn--primary form__submit" type="submit">Request program details <span aria-hidden="true">↗</span></button>
             <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
-            <p class="form__note">This demo form does not send or store your information.</p>
+            <p class="form__note">This demo stores your enquiry only in this browser; it is not sent to the academy.</p>
           </form>
         </div>
       </section>
